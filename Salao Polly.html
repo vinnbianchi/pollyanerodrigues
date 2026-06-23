@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pollyane Rodrigues</title>
+    <style>
+        /* Reset básico e tipografia */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            color: #333;
+            background-color: #fcfbf9;
+            line-height: 1.6;
+        }
+
+        /* Cores do projeto */
+        :root {
+            --cor-primaria: #a87c7c; /* Rosa antigo */
+            --cor-escura: #2c2525;
+            --cor-clara: #f7f3f0;
+            --branco: #ffffff;
+        }
+
+        /* Menu de Navegação */
+        nav {
+            background-color: var(--cor-escura);
+            padding: 1rem 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            color: var(--branco);
+            font-weight: bold;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: var(--branco);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--cor-primaria);
+        }
+
+        nav ul li .btn-nav {
+            background-color: var(--cor-primaria);
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        nav ul li .btn-nav:hover {
+            background-color: var(--branco);
+            color: var(--cor-escura);
+        }
+
+        /* Banner Principal (Hero) */
+        header {
+            height: 80vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("Imagens/stocksnap-woman-2593366.jpg") no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--branco);
+            margin-top: 60px;
+        }
+
+        header .conteudo-banner h4 {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--cor-primaria);
+            margin-bottom: 10px;
+        }
+
+        header .conteudo-banner h1 {
+            font-size: 3rem;
+            margin-bottom: 25px;
+            font-weight: 300;
+        }
+
+        header .botoes a {
+            display: inline-block;
+            padding: 12px 40px;
+            text-decoration:none;
+            font-weight: bold;
+            border-radius: 4px;
+            margin: 5px;
+            transition: all 0.3s;
+        }
+
+        header .botoes .btn-principal {
+            background-color: var(--cor-primaria);
+            color: var(--branco);
+        }
+
+        header .botoes .btn-secundario {
+            border: 2px solid var(--branco);
+            color: var(--branco);
+        }
+
+        header .botoes a:hover {
+            transform: translateY(-3px);
+            opacity: 0.9;
+        }
+
+        /* Seções Gerais */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .titulo-secao {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .titulo-secao h3 {
+            color: var(--cor-primaria);
+            text-transform: uppercase;
+            font-size: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .titulo-secao h2 {
+            font-size: 2rem;
+            color: var(--cor-escura);
+            font-weight: 400;
+        }
+
+        /* Quem Somos */
+        .sobre-container {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .sobre-texto {
+            flex: 1;
+        }
+
+        .sobre-texto p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        /* ========================================================
+           NOVO EFEITO ANTES E DEPOIS (CORRIGIDO E SEGURO)
+           ======================================================== */
+        .trabalhos-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: center;
+        }
+
+        .antes-depois-box {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            height: 450px;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            /* Impede seleção acidental de imagem ao arrastar */
+            user-select: none; 
+        }
+
+        /* Imagens */
+        .antes-depois-box img {
+            width: 450px;
+            height: 450px;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            pointer-events: none;
+        }
+
+        /* O container do Antes começa cobrindo metade da foto */
+        .antes-depois-box .container-antes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%; 
+            height: 100%;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        /* Barra Divisória Visual */
+        .antes-depois-box .linha-divisoria {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            background-color: var(--branco);
+            z-index: 3;
+            pointer-events: none;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+
+        /* O botão redondo no meio da barra */
+        .antes-depois-box .linha-divisoria::before {
+            content: '↔';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background-color: var(--cor-primaria);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        /* O controle deslizante invisível por cima de tudo */
+        .antes-depois-box .slider-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0; /* Fica invisível, mas detecta o arrastar */
+            cursor: ew-resize;
+            z-index: 4;
+        }
+
+        /* Etiquetas */
+        .tag-antes, .tag-depois {
+            position: absolute;
+            bottom: 15px;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            padding: 4px 10px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 3px;
+            z-index: 5;
+            pointer-events: none;
+        }
+        .tag-antes { left: 15px; }
+        .tag-depois { right: 15px; }
+
+        /* Serviços (Grid) */
+        .servicos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card-servico {
+            background-color: var(--branco);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .card-servico:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-servico .icone {
+            font-size: 2.5rem;
+            color: var(--cor-primaria);
+            margin-bottom: 15px;
+        }
+
+        .card-servico h3 {
+            margin-bottom: 15px;
+            color: var(--cor-escura);
+        }
+
+        /* Números */
+        .numeros-bg {
+            background-color: var(--cor-clara);
+            padding: 4rem 2rem;
+        }
+
+        .numeros-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+
+        .num-item h3 {
+            font-size: 2.5rem;
+            color: var(--cor-primaria);
+        }
+
+        /* Contato */
+        .contato-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 2rem;
+        }
+
+        .contato-info-box {
+            background-color: var(--branco);
+            padding: 20px;
+            border-left: 4px solid var(--cor-primaria);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        /* Rodapé */
+        footer {
+            background-color: var(--cor-escura);
+            color: var(--branco);
+            text-align: center;
+            padding: 1rem;
+            margin-top: 4rem;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            nav ul { display: none; }
+            .sobre-container { flex-direction: column; }
+            header .conteudo-banner h1 { font-size: 2rem; }
+            .antes-depois-box { height: 350px; }
+            .antes-depois-box img { height: 350px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Menu de Navegação -->
+    <nav>
+        <div class="logo"><img src="Imagens/logo_7.png" width= 150px; margin="0px" alt="Logo" ></div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#sobre">Quem Somos</a></li>
+            <li><a href="#trabalhos">Trabalhos</a></li>
+            <li><a href="#servicos">Serviços</a></li>
+            <li><a href="#contato">Contato</a></li>
+            <li><a href="https://wa.me/5534997668046" target="_blank" class="btn-nav">AGENDE SEU HORÁRIO</a></li>
+        </ul>
+    </nav>
+
+    <!-- Banner Principal -->
+    <header id="home">
+        <div class="conteudo-banner">
+            <h4>Espaço Pollyane Rodrigues</h4>
+            <h1>Onde o luxo e o bem-estar se encontram em Uberaba.</h1>
+            <div class="botoes">
+                <a href="https://wa.me/5534997668046" target="_blank" class="btn-principal">Agendar Horário</a>
+                <a href="https://maps.app.goo.gl/Q4p2PkG2LtAMqms86" class="btn-secundario"; target="_blank">Como Chegar</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Seção Quem Somos -->
+    <section id="sobre">
+        <div class="sobre-container">
+            <div class="sobre-texto">
+                <div class="titulo-secao" style="text-align: left;">
+                    <h3>Espaço Pollyane Rodrigues</h3>
+                    <h2>Quem Somos</h2>
+                </div>
+                <p>Espaço Pollyane Rodrigues: Tradição e exclusividade em beleza em Uberaba.
+Com anos de história e tradição, consolidamos nosso espaço como um refúgio de autocuidado especializado em corte, coloração e procedimentos químicos..</p>
+                <p>Unimos um ambiente acolhedor, planejado para o seu conforto, a uma profissional altamente qualificada e em constante evolução. Aqui, cada transformação é feita sob medida para realçar a sua melhor versão.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO ANTES E DEPOIS (CORRIGIDA) -->
+    <section id="trabalhos">
+        <div class="titulo-secao">
+            <h3>Portfólio</h3>
+            <h2>Nossos Resultados (Antes e Depois)</h2>
+            <p style="color: #777; margin-top: 10px;">Arraste a barra central para os lados para comparar os resultados.</p>
+        </div>
+
+        <div class="trabalhos-container">
+            
+            <!-- Exemplo 1: Cabelo 1 -->
+            <div class="antes-depois-box">
+                <span class="tag-antes">Antes</span>
+                <span class="tag-depois">Depois</span>
+                
+                <!-- Imagem do Depois (Fundo) -->
+                <img src="Imagens/Depois1.jpeg" alt="Depois">
+                
+                <!-- Imagem do Antes (Frente cortada) -->
+                <div class="container-antes">
+                    <img src="Imagens/Antes1.jpeg" alt="Antes">
+                </div>
+                
+                <!-- Elementos visuais da barra -->
+                <div class="linha-divisoria"></div>
+                
+                <!-- O input que permite arrastar (0 a 100%) -->
+                <input type="range" min="0" max="100" value="50" class="slider-input" oninput="atualizarSlider(this)">
+            </div>
+
+            <!-- Exemplo 2: Cabelo 2 -->
+            <div class="antes-depois-box">
+                <span class="tag-antes">Antes</span>
+                <span class="tag-depois">Depois</span>
+                
+                <img src="Imagens/Depois2.jpeg" alt="Depois">
+                
+                <div class="container-antes">
+                    <img src="Imagens/Antes2.jpeg" alt="Antes">
+                </div>
+                
+                <div class="linha-divisoria"></div>
+                <input type="range" min="0" max="100" value="50" class="slider-input" oninput="atualizarSlider(this)">
+            </div>
+
+            <!-- Exemplo 2: Cabelo 3 -->
+            <div class="antes-depois-box">
+                <span class="tag-antes">Antes</span>
+                <span class="tag-depois">Depois</span>
+                
+                <img src="Imagens/Depois3.jpeg" alt="Depois">
+                
+                <div class="container-antes">
+                    <img src="Imagens/Antes3.jpeg" alt="Antes">
+                </div>
+                
+                <div class="linha-divisoria"></div>
+                <input type="range" min="0" max="100" value="50" class="slider-input" oninput="atualizarSlider(this)">
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Seção Números -->
+    <div class="numeros-bg">
+        <div class="numeros-container">
+            <div class="num-item">
+                <h3>+5</h3>
+                <p>Anos de Experiência</p>
+            </div>
+            <div class="num-item">
+                <h3>+7.500</h3>
+                <p>Clientes Satisfeitas</p>
+            </div>
+            <div class="num-item">
+                <h3>+100.000</h3>
+                <p>Agendamentos</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seção Serviços -->
+    <section id="servicos">
+        <div class="titulo-secao">
+            <h3>Serviços</h3>
+            <h2>O que fazemos?</h2>
+        </div>
+
+        <div class="servicos-grid">
+            <div class="card-servico">
+                <div class="icone"><img src="https://negociosdebeleza.beautyfair.com.br/wp-content/uploads/2025/06/progressiva-sem-formol-2-811x526.webp" width=180px ;alt="Progressiva"></div>
+                <h3>Progressiva</h3>
+                <p>Alinhamento capilar de alta performance: o liso perfeito com o movimento e o brilho que seu cabelo merece.</p>
+            </div>
+            <div class="card-servico">
+                <div class="icone"><img src="https://img.magnific.com/fotos-gratis/mulher-arrumando-o-cabelo-no-salao-de-beleza_23-2149167405.jpg?semt=ais_hybrid&w=740&q=80" width=180px;alt=""></div>
+                <h3>Escova</h3>
+                <p>Profissional treinada nas inúmeras técnicas para encontrar o visual ideal.</p>
+            </div>
+            <div class="card-servico">
+                <div class="icone"><img src="https://www.slowbeauty.com.br/wp-content/uploads/2025/03/imagem_2025-03-27_140115844.webp" width=150px; alt=""></div>
+                <h3>Corte</h3>
+                <p>Profissional treinada nas inúmeras técnicas para encontrar o visual ideal.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Elfsight Google Reviews | Untitled Google Reviews -->
+<script src="https://elfsightcdn.com/platform.js" async></script>
+<div class="elfsight-app-6acd5a0f-5b90-4e50-a4ee-b461cd7d1d5d" data-elfsight-app-lazy></div>
+
+    <!-- Seção Contato -->
+    <section id="contato">
+        <div class="titulo-secao">
+            <h3>Contato</h3>
+            <h2>Fale Conosco</h2>
+        </div>
+
+        <div class="contato-container">
+            <div class="contato-info-box">
+                <p><a href="https://wa.me/5534997668046" target="_blank"><img src="https://static.whatsapp.net/rsrc.php/yY/r/_mMwO8HKa4V.svg" alt="WhatsApp"/></a></p>
+                <p>(34) 99766-8046</p>
+            </div>
+            <div class="contato-info-box">
+                <p><a href="https://www.instagram.com/espaco_pollyanerodrigues?igsh=MWRvODUxcW1qcGhvZQ==" target="_blank"><img src="data:image/jpeg;base64,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" width=100px alt="Instagram"/></a></p>
+                <p>espaco_pollyanerodrigues</p>
+            </div>
+            <div class="contato-info-box">
+                <h4>Endereço</h4>
+                <p>Rua Francisca Raimunda Gomes, 648<br>Pacaembu | Uberaba/MG</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; Espaço Pollyane Rodrigues - Salão de Beleza. Todos os direitos reservados. Desenvolvido por vinnbianchi</p>
+    </footer>
+
+    <!-- SCRIPT DO ANTES E DEPOIS -->
+    <script>
+        function atualizarSlider(slider) {
+            // Encontra o "quadro" pai onde o slider está inserido
+            const box = slider.parentElement;
+            // Pega o valor atual do arrastar (de 0 a 100)
+            const valor = slider.value + '%';
+            
+            // Ajusta a largura da imagem do "Antes" e a posição da barra divisória
+            box.querySelector('.container-antes').style.width = valor;
+            box.querySelector('.linha-divisoria').style.left = valor;
+        }
+    </script>
+
+</body>
+</html>
